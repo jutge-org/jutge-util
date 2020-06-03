@@ -30,7 +30,8 @@ def init_logging():
     """Configures custom logging options."""
 
     logging.basicConfig(
-        format='%s@%s ' % (get_username(), get_hostname()) + '%(asctime)s %(levelname)s %(message)s',
+        format='%s@%s ' % (get_username(), get_hostname()) +
+        '%(asctime)s %(levelname)s %(message)s',
         datefmt='%Y-%m-%d %H:%M:%S',
     )
     logging.getLogger('').setLevel(logging.NOTSET)
@@ -278,3 +279,21 @@ def current_time():
 def current_date():
     """Returns a string with out format for dates."""
     return time.strftime("%Y-%m-%d")
+
+
+# ----------------------------------------------------------------------------
+# Misc
+# ----------------------------------------------------------------------------
+
+
+def convert_bytes(num):
+    """Converts bytes to Mb, Gb, etc"""
+    step_unit = 1000.0  # 1024 bad the size
+
+    for x in ['bytes', 'Kb', 'Mb', 'Gb', 'Tb']:
+        if num < step_unit:
+            if x == 'bytes':
+                return "%i %s" % (num, x)
+            else:
+                return "%3.1 %s" % (num, x)
+        num /= step_unit
