@@ -15,14 +15,6 @@ import yaml
 
 
 # ----------------------------------------------------------------------------
-# Ping
-# ----------------------------------------------------------------------------
-
-def ping():
-    print('pong')
-
-
-# ----------------------------------------------------------------------------
 # Logging
 # ----------------------------------------------------------------------------
 
@@ -78,13 +70,6 @@ def write_file(name, txt=""):
     f.close()
 
 
-def append_file(name, txt=""):
-    """Adds to file name the contents of txt."""
-    f = open(name, "a")
-    f.write(txt)
-    f.close()
-
-
 def del_file(name):
     """Deletes the file name. Does not complain on error."""
     try:
@@ -118,11 +103,6 @@ def copy_file(src, dst):
     shutil.copy(src, dst)
 
 
-def copy_dir(src, dst):
-    """Recursively copy an entire directory tree rooted at src to dst."""
-    shutil.copytree(src, dst)
-
-
 def move_file(src, dst):
     """Recursively move a file or directory to another location."""
     shutil.move(src, dst)
@@ -147,48 +127,8 @@ def read_yml(path):
 
 
 # ----------------------------------------------------------------------------
-# Utilities for properties files
+# Utilities for tgz files
 # ----------------------------------------------------------------------------
-
-
-def read_props(path):
-    """Returns a dictionary with the properties of file path."""
-    dic = {}
-    f = open(path)
-    for line in f.readlines():
-        k, v = line.split(":", 1)
-        dic[k.strip()] = v.strip()
-    return dic
-
-
-def write_props(path, inf):
-    """Writes to file path the properties of file inf."""
-    t = ""
-    for k, v in inf.iteritems():
-        t += k + ": " + v + "\n"
-    write_file(path, t)
-
-
-# ----------------------------------------------------------------------------
-# Utilities for tar/tgz files
-# ----------------------------------------------------------------------------
-
-
-def create_tar(name, filenames, path=None):
-    """Creates a tar file name with the contents given in the list of filenames.
-    Uses path if given."""
-    if name == "-":
-        tar = tarfile.open(mode="w|", fileobj=sys.stdout)
-    else:
-        tar = tarfile.open(name, "w")
-    cwd = os.getcwd()
-    if path:
-        os.chdir(path)
-    for x in filenames:
-        tar.add(x)
-    if path:
-        os.chdir(cwd)
-    tar.close()
 
 
 def create_tgz(name, filenames, path=None):
@@ -208,17 +148,6 @@ def create_tgz(name, filenames, path=None):
     tar.close()
 
 
-def extract_tar(name, path):
-    """Extracts a tar file in the given path."""
-    if name == "-":
-        tar = tarfile.open(mode="r|", fileobj=sys.stdin)
-    else:
-        tar = tarfile.open(name)
-    for x in tar:
-        tar.extract(x, path)
-    tar.close()
-
-
 def extract_tgz(name, path):
     """Extracts a tgz file in the given path."""
     if name == "-":
@@ -228,16 +157,6 @@ def extract_tgz(name, path):
     for x in tar:
         tar.extract(x, path)
     tar.close()
-
-
-def get_from_tgz(tgz, name):
-    """Returns the contents of file name inside a tgz or tar file."""
-    tar = tarfile.open(tgz)
-    f = tar.extractfile(name)
-    r = f.read()
-    f.close()
-    tar.close()
-    return r
 
 
 # ----------------------------------------------------------------------------
@@ -262,23 +181,13 @@ def mkdir(path):
 
 
 # ----------------------------------------------------------------------------
-# Utilities for dates and times
+# Utilities for time
 # ----------------------------------------------------------------------------
-
-
-def current_year():
-    """Returns a string with the current year."""
-    return time.strftime("%Y")
 
 
 def current_time():
     """Returns a string with out format for times."""
     return time.strftime("%Y-%m-%d %H:%M:%S")
-
-
-def current_date():
-    """Returns a string with out format for dates."""
-    return time.strftime("%Y-%m-%d")
 
 
 # ----------------------------------------------------------------------------
