@@ -204,5 +204,5 @@ def convert_bytes(num):
             if x == 'bytes':
                 return "%i %s" % (num, x)
             else:
-                return "%3.1 %s" % (num, x)
+                return "%3.1f %s" % (num, x)
         num /= step_unit
