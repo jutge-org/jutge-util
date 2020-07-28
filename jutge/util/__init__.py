@@ -206,3 +206,9 @@ def convert_bytes(num):
             else:
                 return "%3.1f %s" % (num, x)
         num /= step_unit
+
+
+def system(cmd):
+    """As os.system(cmd) but writes cmd."""
+    print(cmd)
+    return os.system(cmd)
