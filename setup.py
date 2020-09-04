@@ -3,13 +3,14 @@
 
 from setuptools import setup
 
-version = '1.3.2'
+version = '1.3.3'
 
 setup(
     name='jutge-util',
     packages=['jutge.util'],
     install_requires=[
         'pyyaml',
+        'chardet'
     ],
     version=version,
     description='Common utilities for Jutge.org\'s scripts',

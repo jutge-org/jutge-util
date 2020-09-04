@@ -10,6 +10,7 @@ import sys
 import tarfile
 import tempfile
 import time
+import chardet
 
 import yaml
 
@@ -57,9 +58,18 @@ def intersection(a, b):
 
 def read_file(name):
     """Returns a string with the contents of the file name."""
-    f = open(name)
-    r = f.read()
-    f.close()
+    try:
+        fd = open(name, 'r')
+        r = fd.read()
+        fd.close()
+    except Exception:
+        fd = open(name, 'rb')
+        char_detection = chardet.detect(fd.read())
+        fd.close()
+
+        f = open(name, encoding=char_detection['encoding'], errors='ignore')
+        r = f.read()
+        f.close()
     return r
 
 
